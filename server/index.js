@@ -14,65 +14,13 @@ app.use(bodyParser.json());
 app.use(morgan('tiny'));   
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', express.static(path.join(__dirname, '../public')));
-
-// app.get('/new-access-code', function(req, res) {
-//     var customerid = req.params.customerid;
-//     var cartid     = req.params.cartid;
-//     // you can then look up customer and cart details in a db etc
-//     // I'm hardcoding an email here for simplicity
-//     amountinkobo = process.env.TEST_AMOUNT * 100;
-//     if(isNaN(amountinkobo) || (amountinkobo < 2500)){
-//         amountinkobo = 2500;
-//     }
-//     email = process.env.SAMPLE_EMAIL;
-
-//     // all fields supported by this call can be gleaned from
-//     // https://developers.paystack.co/reference#initialize-a-transaction
-//     paystack.transaction.initialize({
-//         email:     email,        // a valid email address
-//         amount:    amountinkobo, // only kobo and must be integer
-//         metadata:  {
-//             custom_fields:[
-//                 {
-//                     "display_name":"Started From",
-//                     "variable_name":"started_from",
-//                     "value":"sample charge card backend"
-//                 },
-//                 {
-//                     "display_name":"Requested by",
-//                     "variable_name":"requested_by",
-//                     "value": req.headers['user-agent']
-//                 },
-//                 {
-//                     "display_name":"Server",
-//                     "variable_name":"server",
-//                     "value": req.headers.host
-//                 }
-//             ]
-//         }
-//     },function(error, body) {
-//         if(error){
-//             res.send({error:error});
-//             return;
-//         }
-//         res.send(body.data.access_code);
-//     });
-// });
-
-// payeeData = {
-//   type: "nuban", 
-//   name: "Mr. Shiba", 
-//   description: "Customer1029 bank account", 
-//   account_number: "0000000000", 
-//   bank_code: "044", 
-//   currency: "NGN"
-// }
+app.use('/pay', express.static(path.join(__dirname, '../public')));
 
 let authOptions = (method, query, data) => {
   return {
     method: method,
     url: `https://api.paystack.co/${query}`,
-    data: data,
+    data: JSON.stringify(data),
     headers: {
       'Authorization': process.env.PAYSTACK_SECRET_KEY,
       'Content-Type': 'application/json'
@@ -89,14 +37,14 @@ app.get('/balance', (req, res) => {
 });
 
 app.get('/history', (req, res) => {
-  Axios(authOptions('GET', 'transaction/totals'))
+  Axios(authOptions('GET', 'transaction'))
     .then(({ data }) => {
       res.send(data);
     });
 });
 
 app.get('/payees', (req, res) => {
-  Axios(authOptions('GET', 'transfer'))
+  Axios(authOptions('GET', 'transferrecipient'))
     .then(({ data }) => {
       res.send(data);
     });
@@ -108,75 +56,98 @@ app.get('/bank-list', (req, res) => {
       res.send(data);
     });
 });
-// app.post('/register-payee', function(req, res) {
-//   var customerid = req.params.customerid;
-//   var cartid     = req.params.cartid;
-//   // you can then look up customer and cart details in a db etc
-//   // I'm hardcoding an email here for simplicity
-//   amountinkobo = process.env.TEST_AMOUNT * 100;
-//   if(isNaN(amountinkobo) || (amountinkobo < 2500)){
-//       amountinkobo = 2500;
-//   }
-//   email = process.env.SAMPLE_EMAIL;
 
-//   // all fields supported by this call can be gleaned from
-//   // https://developers.paystack.co/reference#initialize-a-transaction
-//   paystack.transaction.initialize({
-//       email:     email,        // a valid email address
-//       amount:    amountinkobo, // only kobo and must be integer
-//       metadata:  {
-//           custom_fields:[
-//               {
-//                   "display_name":"Started From",
-//                   "variable_name":"started_from",
-//                   "value":"sample charge card backend"
-//               },
-//               {
-//                   "display_name":"Requested by",
-//                   "variable_name":"requested_by",
-//                   "value": req.headers['user-agent']
-//               },
-//               {
-//                   "display_name":"Server",
-//                   "variable_name":"server",
-//                   "value": req.headers.host
-//               }
-//           ]
-//       }
-//   },function(error, body) {
-//       if(error){
-//           res.send({error:error});
-//           return;
-//       }
-//       res.send(body.data.access_code);
-//   });
-// });
+app.post('/register-payee', function(req, res) {
+  let payeeData = {
+    type: "nuban", 
+    name: req.body.name, 
+    description: req.body.description, 
+    account_number: req.body.accountNumber, 
+    bank_code: req.body.bankCode, 
+    currency: "NGN"
+  };
 
-// app.get('/verify/:reference', function(req, res) {
-//     var reference = req.params.reference;
+  Axios(authOptions('POST', 'transferrecipient', payeeData))
+    .then(({ data }) => {
+      res.send(data);
+    })
+    .catch(e => {
+      console.log(e.message);
+    });
+});
 
-//     paystack.transaction.verify(reference,
-//         function(error, body) {
-//         if(error){
-//             res.send({error:error});
-//             return;
-//         }
-//         if(body.data.success){
-//             // save authorization
-//             var auth = body.authorization;
-//         }
-//         res.send(body.data.gateway_response);
-//     });
-// });
+app.post('/initialize-transfer', function(req, res) {
+  let data = {
+    source: 'balance',
+    reason: 'Testing',
+    amount: req.body.amount,
+    recipient: req.body.recipient
+  };
 
-// //The 404 Route (ALWAYS Keep this as the last route)
-// app.get('/*', function(req, res){
-//     res.status(404).send('Only GET /new-access-code \
-//         or GET /verify/{reference} is allowed');
-// });
+  Axios(authOptions('POST', 'transfer', data))
+    .then(({ data }) => {
+      res.send(data);
+    })
+    .catch(e => {
+      console.log(e.message);
+    });
+});
 
-// app.listen(app.get('port'), function() {
-//     console.log("Node app is running at localhost:" + app.get('port'))
-// })
+app.post('/finalize-transfer', function(req, res) {
+  let data = {
+    transfer_code: req.body.transferCode, 
+    otp: req.body.otp
+  };
+
+  Axios(authOptions('POST', 'finalize_transfer', data))
+    .then(({ data }) => {
+      res.send(data);
+    })
+    .catch(e => {
+      console.log(e.message);
+    });
+});
+
+app.post('/initialize-transaction', function(req, res) {
+  let data = {
+    amount: req.body.amount, 
+    email: req.body.email
+  };
+
+  Axios(authOptions('POST', 'transaction/initialize', data))
+    .then(({ data }) => {
+      res.send(data);
+    })
+    .catch(e => {
+      console.log(e.message);
+    });
+});
+
+app.post('/finalize-transaction', function(req, res) {
+  let data = {
+    email: "nuban", 
+    amount: req.body.name, 
+    card: {
+      cvv: req.body.cvv,
+      number: req.body.number,
+      expiry_month: req.body.expMonth,
+      expiry_year: req.body.expYear
+    }
+  };
+
+  Axios(authOptions('POST', 'charge', data))
+    .then(({ data }) => {
+      res.send(data);
+    })
+    .catch(e => {
+      console.log(e.message);
+    });
+});
+
+//The 404 Route (ALWAYS Keep this as the last route)
+app.get('/*', function(req, res){
+  res.status(404).send('Only GET /new-access-code \
+      or GET /verify/{reference} is allowed');
+});
 
 app.listen(app.get('port'), () => console.log(`Server listening on port ${app.get('port')}`));
