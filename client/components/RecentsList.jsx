@@ -9,7 +9,7 @@ const RecentList = ({ list, selected, chooseSelected, changeIsOpen, isOpen, setR
       <div className="title">
         Recent People Paid
       </div>
-      <div className="list column">
+      <div className="list column horizontal-center">
         {
           list.map((element, id) => {
             return <RecentPayeeEntry 

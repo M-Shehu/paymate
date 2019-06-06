@@ -24,14 +24,14 @@ const RecentPayeeEntry = ({ nameInfo, isOpen, role, selected, id, chooseSelected
       recentDOMElement.style.color = "white";
       recentDOMElement.style.backgroundColor = "rgb(255, 212, 132)";
       recentDOMElement.style.height = "120px";
-      recentDOMElement.style.boxShadow = "0 25px 45px rgba(114, 114, 114, 0.3), 0 20px 15px rgba(114, 114, 114, 0.22)";
+      // recentDOMElement.style.boxShadow = "0 25px 45px rgba(114, 114, 114, 0.3), 0 20px 15px rgba(114, 114, 114, 0.22)";
     }
   
     const closeRecent = () => {
       inputDOMElement.style.display = "none";
       recentDOMElement.style.backgroundColor = "rgb(240, 240, 240)";
       recentDOMElement.style.height = "80px";
-      recentDOMElement.style.boxShadow = "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)";
+      // recentDOMElement.style.boxShadow = "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)";
     }
     console.log(selected, `entry${id}`);
     selected !== `entry${id}` ? closeRecent() : openRecent();
@@ -43,7 +43,7 @@ const RecentPayeeEntry = ({ nameInfo, isOpen, role, selected, id, chooseSelected
       NAME: {nameInfo.name}
     </div>
     <div className="entry-role">
-      ROLE: {nameInfo.role}
+      ROLE: {nameInfo.description}
     </div>
     <div className="entry-input" id={`input${id}`}>
       <strong>How much do you want to send?: </strong>
