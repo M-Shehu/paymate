@@ -1,0 +1,60 @@
+.contact-form {
+  justify-content: center;
+  display: flex;
+  height: 400px;
+  border-radius: 8px;
+  width: 400px;
+  flex-flow: column;
+  background: rgb(172,216,252);
+  background: linear-gradient(220deg, rgba(172,216,252,1) 0%, rgba(31,106,168,1) 49%, rgba(9,41,68,1) 100%);
+  box-shadow: 0 25px 45px rgba(14, 14, 14, 0.20), 0 20px 15px rgba(20, 20, 20, 0.30);
+}
+.contact-form label {
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 0.1rem;
+  margin-top: 1.5rem;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.contact-form input {
+  border: none;
+  width: 90%;
+  padding: 8px;
+  background-color: rgb(45, 121, 184);
+  color: white;
+  -moz-box-shadow:    inset 0 7px 7px rgba(14, 14, 14, 0.5);
+  -webkit-box-shadow: inset 0 7px 7px rgba(14, 14, 14, 0.5);
+  box-shadow:         inset 0 7px 7px rgba(14, 14, 14, 0.5);
+}
+
+.contact-form input::placeholder {
+  font-size: 15px;
+  font-weight: 100;
+  color: rgb(218, 218, 218);
+  font-style: italic;
+}
+
+.contact-form .input-field {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+}
+
+.contact-form .btn {
+  margin: 30px 0;
+  padding: 10px 20px;
+  border: none;
+  font-size: 15px;
+  color: white;
+  background-color: orange;
+}
+
+.number-cvv {
+  width: 80%;
+}
+
+.expiry {
+  width: 60%;
+}
