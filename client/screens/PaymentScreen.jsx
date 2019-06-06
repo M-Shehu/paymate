@@ -2,32 +2,55 @@ import React, { useState, useEffect } from 'react';
 import PaymentForm from '../components/PaymentForm';
 import Axios from 'axios';
 
-const PaymentScreen = ({ receipient }) => {
+const PaymentScreen = ({ receipient, type }) => {
 
-  console.log(receipient);
   let email = "magnanimus.shehu@gmail.com";
-  let amount = 10;
+  let receipientCode = receipient.reference;
+  let amount = receipient.amount;
   const [ accessCode, setAccessCode ] = useState('');
   const [ reference, setReference ] = useState('');
+  const [ transferCode, setTransferCode ] = useState('');
+  const [ otp, setOtp ] = useState('');
 
+  const initializeTransfer = () => {
+    let data = {
+      amount: amount,
+      recipient: receipientCode
+    }
+
+    Axios.post('/initialize-transfer', data)
+    .then(({ data }) => {
+      console.log(data);
+    })
+  }
+
+  const finalizeTransfer = () => {
+    let data = { transferCode, otp };
+
+    Axios.post('/finalize-transfer', data)
+    .then(({ data }) => {
+      console.log(data);
+    })
+  }
 
   const initializeTransaction = () => {
-    console.log(email, amount);
-    let authOptions = {
-      method: 'POST',
-      url: 'https://api.paystack.co/transaction/initialize',
-      data: JSON.stringify({email, amount}),
-      headers: {
-          'Authorization': 'Bearer sk_test_0d03d4204fd232838c4b27538c204c5553cf8e79',
-          'Content-Type': 'application/json'
-      },
-      json: true
-    };
+    let data = {
+      amount: amount,
+      recipient: receipientCode
+    }
 
-    Axios(authOptions)
+    Axios.post('/initialize-transfer', data)
     .then(({ data }) => {
-      setAccessCode(data.data.access_code);
-      setReference(data.data.reference);
+      console.log(data);
+    })
+  }
+
+  const finalizeTransaction = () => {
+    let data = { transferCode, otp };
+
+    Axios.post('/finalize-transfer', data)
+    .then(({ data }) => {
+      console.log(data);
     })
   }
 

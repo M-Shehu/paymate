@@ -149,8 +149,7 @@ const App = () => {
           <PaymentScreen 
             {...props} 
             email={email} 
-            receipient={receipient}
-            amount={amount} />)} />
+            receipient={receipient} />)} />
     </Router>
   )
 }

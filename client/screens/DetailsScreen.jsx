@@ -42,13 +42,13 @@ const DetailsScreen = ({ selected, chooseSelected, changeIsOpen, isOpen, setRece
         setReceipientObj={setReceipientObj} />  
 
       <RecentsList 
-        list={list} 
+        list={serverRequest.payees} 
         selected={selected} 
         chooseSelected={chooseSelected} 
         isOpen={isOpen} 
         setReceipientObj={setReceipientObj}
         changeIsOpen={changeIsOpen} />
-        
+
     </div>
   </div>
 )};
