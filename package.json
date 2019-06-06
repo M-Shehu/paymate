@@ -1,0 +1,46 @@
+{
+  "name": "paymate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon -r dotenv/config server/index.js",
+    "build": "webpack --mode development --watch",
+    "build:watch": "webpack-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "cleave.js": "^1.5.0",
+    "dotenv-webpack": "^1.7.0",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "paystack": "^2.0.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-loading-screen": "0.0.17",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1",
+    "react-select": "^3.0.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-transform-regenerator": "^7.4.5",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^2.1.1",
+    "dotenv": "^8.0.0",
+    "file-loader": "^3.0.1",
+    "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.33.0",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.5.1"
+  }
+}
