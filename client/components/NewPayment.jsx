@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import LoadingScreen from 'react-loading-screen';
 import Select from 'react-select';
+
 import '../assets/styles/NewPayment.css';
+import Axios from 'axios';
 
 const NewPayments = ({ setReceipientObj, banks }) => {
 
@@ -10,17 +12,27 @@ const NewPayments = ({ setReceipientObj, banks }) => {
   const [ payeeOccupation, setPayeeOccupation ] = useState('');
   const [ gettingPayeeRef, setGettingPayeeRef ] = useState(false);
   const [ payeeAccountNumber, setPayeeAccountNumber ] = useState('');
+  const [ amount, setAmount ] = useState('');
   const [ payeeBank, setPayeeBank ] = useState('');
 
   const addPayee = (e) => {
     e.preventDefault();
-    // let receipient = {
-    //   amount: amount,
-    //   reference: nameInfo.reference
-    // }
     setGettingPayeeRef(true);
-    // setReceipientObj(receipient);
-    // setAmount('');
+    Axios.post('/register-payee', {
+      name: payeeName,
+      description: payeeOccupation,
+      accountNumber: payeeAccountNumber,
+      bankCode: payeeBank.value
+    })
+    .then(({ data }) => {
+      setGettingPayeeRef(false);
+      let receipient = {
+        amount: amount,
+        reference: data.data.recipient_code
+      }
+      console.log(data, receipient);
+      setReceipientObj(receipient);
+    })
   }
 
   const mapBankList = () => {
@@ -45,6 +57,7 @@ const NewPayments = ({ setReceipientObj, banks }) => {
               <input onChange={e => setPayeeName(e.target.value)} type="text" placeholder="Payee Name" value={payeeName}></input>
               <input onChange={e => setPayeeOccupation(e.target.value)} type="text" placeholder="Payee Occupation" value={payeeOccupation}></input>
               <input onChange={e => setPayeeAccountNumber(e.target.value)} type="number" placeholder="Payee Account Number" value={payeeAccountNumber}></input>
+              <input onChange={e => setAmount(e.target.value)} name="amount" type="number" placeholder="Amount To be Sent" value={amount}></input>
               <Select
                 value={payeeBank}
                 onChange={handleChange}
