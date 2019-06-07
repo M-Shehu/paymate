@@ -1,7 +1,10 @@
 {
   "name": "paymate",
   "version": "1.0.0",
-  "description": "",
+  "description": "PayMate app for PayStack interview",
+  "engines": {
+    "node": "10.3.0"
+  },
   "main": "index.js",
   "scripts": {
     "start": "nodemon -r dotenv/config server/index.js",
