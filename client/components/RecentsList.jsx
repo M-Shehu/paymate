@@ -7,8 +7,9 @@ const RecentList = ({ list, selected, chooseSelected, changeIsOpen, isOpen, setR
   return (
     <div className="expand column horizontal-center">
       <div className="title">
-        Recent People Paid
+        Suppliers
       </div>
+      <em>click on supplier to make transfer</em>
       <div className="list column horizontal-center">
         {
           list.map((element, id) => {

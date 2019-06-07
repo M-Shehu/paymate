@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Axios from 'axios';
 import '../assets/styles/paymentForm.css';
 
-const PaymentForm = ({ accessCode }) => {
+const PaymentForm = () => {
 
   const [ paystack, setPaystack ] = useState({});
   const [ email, setEmail ] = useState('mag.shehu@gmail.com');
@@ -11,42 +10,6 @@ const PaymentForm = ({ accessCode }) => {
   const [ CVV, setCVV ] = useState('');
   const [ expMonth, setExpMonth ] = useState('');
   const [ expYear, setExpYear ] = useState('');
-
-  const initializePayStack = () => {
-    Paystack.init({
-      form: "paystack",
-      access_code: accessCode 
-    })
-    .then(returnedObj => {
-      console.log(returnedObj);
-      setPaystack(returnedObj); 
-    })
-    .catch(function(error){
-      console.log("There was an error loading Paystack", error);
-    });
-  }
-
-  const formatNumber = (value) => {
-    var v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
-    var matches = v.match(/\d{4,16}/g);
-    var match = matches && matches[0] || ''
-    var parts = []
-    for (i=0, len=match.length; i<len; i+=4) {
-      parts.push(match.substring(i, i+4))
-    }
-    if (parts.length) {
-      return parts.join(' ')
-    } else {
-      return value
-    }
-  }
-
-  
-
-  useEffect(() => {
-    initializePayStack();
-    // initializeTransaction();
-  }, [])
 
   return (
     <div className="container center">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import HistoryEntry from './HistoryEntry';
 
 const History = ({ history }) => {
@@ -10,7 +10,7 @@ const History = ({ history }) => {
   const renderHistory = (history) => {
     console.log(history);
     return history.map (element => {
-      return <HistoryEntry text={`₦${element.amount} --- ${element.customer.email}`}/>; 
+      return <HistoryEntry text={`₦${(element.amount/100).toLocaleString()} --- ${element.customer.email}`}/>; 
     })
   } 
   

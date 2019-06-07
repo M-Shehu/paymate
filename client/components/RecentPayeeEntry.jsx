@@ -1,19 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import Axios from 'axios';
+
 import '../assets/styles/RecentPayeeEntry.css';
 
-const RecentPayeeEntry = ({ nameInfo, isOpen, role, selected, id, chooseSelected, changeIsOpen, setReceipientObj }) => {
+const RecentPayeeEntry = ({ nameInfo, isOpen, selected, id, chooseSelected, changeIsOpen }) => {
 
-  const nameInput = React.createRef();
   const [ amount, setAmount ] = useState();
+  const [ otpRequested, setOtpRequested ] = useState(false);
+
+  const initializeTransfer = (data) => {
+    
+    Axios.post('/initialize-transfer', data)
+    .then(({ data }) => {
+      console.log(data);
+    })
+  }
 
   const submitAmount = (e) => {
+    console.log(nameInfo);
     e.preventDefault();
     let receipient = {
       amount: amount,
-      reference: nameInfo.reference
+      recipient: nameInfo.recipient_code
     }
-    setReceipientObj(receipient);
-    setAmount('');
+
+    initializeTransfer(receipient);    
   }
 
   useEffect(() => {
@@ -24,16 +35,13 @@ const RecentPayeeEntry = ({ nameInfo, isOpen, role, selected, id, chooseSelected
       recentDOMElement.style.color = "white";
       recentDOMElement.style.backgroundColor = "rgb(255, 212, 132)";
       recentDOMElement.style.height = "120px";
-      // recentDOMElement.style.boxShadow = "0 25px 45px rgba(114, 114, 114, 0.3), 0 20px 15px rgba(114, 114, 114, 0.22)";
     }
   
     const closeRecent = () => {
       inputDOMElement.style.display = "none";
       recentDOMElement.style.backgroundColor = "rgb(240, 240, 240)";
       recentDOMElement.style.height = "80px";
-      // recentDOMElement.style.boxShadow = "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)";
     }
-    console.log(selected, `entry${id}`);
     selected !== `entry${id}` ? closeRecent() : openRecent();
   }, [isOpen])
 
@@ -47,7 +55,13 @@ const RecentPayeeEntry = ({ nameInfo, isOpen, role, selected, id, chooseSelected
     </div>
     <div className="entry-input" id={`input${id}`}>
       <strong>How much do you want to send?: </strong>
-      <input onChange={e => setAmount(e.target.value)} ref={nameInput} name="amount" className="message-name" type="number" placeholder="Amount To be Sent" value={amount}></input>
+      <input 
+        onChange={e => setAmount(e.target.value)} 
+        name="amount" 
+        className="message-name" 
+        type="number" 
+        placeholder="Amount To be Sent" 
+        value={amount}></input>
       <input onClick={submitAmount} type="submit" name="amount" value="Send"></input>
     </div>
   </div>
