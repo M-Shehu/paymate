@@ -16,7 +16,6 @@ const PaymentScreen = () => {
 
     Axios.post('/initialize-transfer', data)
     .then(({ data }) => {
-      console.log(data);
     })
   }
 
@@ -25,7 +24,6 @@ const PaymentScreen = () => {
 
     Axios.post('/finalize-transfer', data)
     .then(({ data }) => {
-      console.log(data);
     })
   }
 

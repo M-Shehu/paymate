@@ -22,22 +22,18 @@ const App = () => {
     let request = {};
     Axios.get('/balance')
       .then(({ data }) => {
-        console.log(data);
         request['balance'] = data.data[0].balance;
         return Axios.get('/history')
       })
       .then(({ data }) => {
-        console.log(data);
         request['history'] = data.data;
         return Axios.get('/payees')
       })
       .then(({ data }) => {
-        console.log(data);
         request['payees'] = data.data;
         return Axios.get('/bank-list')
       })
       .then(({ data }) => {
-        console.log(data);
         request['bankList'] = data.data;
       })
       .then(() => {
@@ -53,7 +49,6 @@ const App = () => {
     .then(({ data }) => {
       retrieveServerRequest();
       alert('Your transfer was successful');
-      console.log(data);
     })
   }
 

@@ -8,7 +8,6 @@ const RecentList = ({ list, submitAmount, handleAmountChange }) => {
   const [ isOpen, setIsOpen ] = useState(true);
 
   const chooseSelected = (e) => {
-    console.log(e.target.parentNode);
     setSelected(`${e.target.parentNode.id}`)
   }
 
