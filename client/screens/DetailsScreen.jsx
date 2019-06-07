@@ -1,56 +1,38 @@
 import React from 'react';
 import Balance from '../components/Balance';
-import NewPayment from '../components/NewPayment';
 import RecentsList from '../components/RecentsList';
 import History from '../components/History';
 import '../assets/styles/DetailsScreen.css';
+import TopBar from '../components/TopBar';
 
-const list = [
-  {
-    name: "shehu",
-    role: 'baker',
-    reference: '134ddfs'
-  },
-  {
-    name: "Tutu",
-    role: 'lala',
-    reference: '134ddfs'
-  },
-  {
-    name: "Resue",
-    role: 'sjf',
-    reference: '134ddfs'
-  },
-]
-
-const DetailsScreen = ({ selected, chooseSelected, changeIsOpen, isOpen, setReceipientObj, serverRequest }) => {
+const DetailsScreen = ({ selected, chooseSelected, changeIsOpen, isOpen, serverRequest, email }) => {
   return (
-  <div className="container row">
-    <div className="col-40 column center">
+    <React.Fragment>
+      <TopBar />
+      <div className="container row">
+      <div className="col-50 column center balance-col">
 
-      <Balance 
-        balance={serverRequest.balance} />
+        <Balance
+          banks={serverRequest.bankList}
+          email={email}
+          balance={serverRequest.balance} />
 
-      <History 
-        history={serverRequest.history} />
+        <History 
+          history={serverRequest.history} />
 
+      </div>
+      <div className="col-50 column horizontal-center">
+
+        <RecentsList 
+          list={serverRequest.payees} 
+          selected={selected} 
+          chooseSelected={chooseSelected} 
+          isOpen={isOpen} 
+          changeIsOpen={changeIsOpen} />
+
+      </div>
     </div>
-    <div className="col-60 column horizontal-center">
-
-      <NewPayment 
-        banks={serverRequest.bankList}
-        setReceipientObj={setReceipientObj} />  
-
-      <RecentsList 
-        list={serverRequest.payees} 
-        selected={selected} 
-        chooseSelected={chooseSelected} 
-        isOpen={isOpen} 
-        setReceipientObj={setReceipientObj}
-        changeIsOpen={changeIsOpen} />
-
-    </div>
-  </div>
+  </React.Fragment>
 )};
 
 export default DetailsScreen;
