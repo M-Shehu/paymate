@@ -5,7 +5,7 @@ import History from '../components/History';
 import '../assets/styles/DetailsScreen.css';
 import TopBar from '../components/TopBar';
 
-const DetailsScreen = ({ selected, chooseSelected, changeIsOpen, isOpen, serverRequest, email }) => {
+const DetailsScreen = ({ handleAmountChange, serverRequest, email, submitAmount }) => {
   return (
     <React.Fragment>
       <TopBar />
@@ -25,10 +25,8 @@ const DetailsScreen = ({ selected, chooseSelected, changeIsOpen, isOpen, serverR
 
         <RecentsList 
           list={serverRequest.payees} 
-          selected={selected} 
-          chooseSelected={chooseSelected} 
-          isOpen={isOpen} 
-          changeIsOpen={changeIsOpen} />
+          handleAmountChange={handleAmountChange}
+          submitAmount={submitAmount} />
 
       </div>
     </div>

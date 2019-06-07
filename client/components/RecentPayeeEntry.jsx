@@ -3,29 +3,10 @@ import Axios from 'axios';
 
 import '../assets/styles/RecentPayeeEntry.css';
 
-const RecentPayeeEntry = ({ nameInfo, isOpen, selected, id, chooseSelected, changeIsOpen }) => {
+const RecentPayeeEntry = ({ nameInfo, isOpen, selected, id, handleAmountChange, chooseSelected, changeIsOpen, submitAmount }) => {
 
   const [ amount, setAmount ] = useState();
   const [ otpRequested, setOtpRequested ] = useState(false);
-
-  const initializeTransfer = (data) => {
-    
-    Axios.post('/initialize-transfer', data)
-    .then(({ data }) => {
-      console.log(data);
-    })
-  }
-
-  const submitAmount = (e) => {
-    console.log(nameInfo);
-    e.preventDefault();
-    let receipient = {
-      amount: amount,
-      recipient: nameInfo.recipient_code
-    }
-
-    initializeTransfer(receipient);    
-  }
 
   useEffect(() => {
     const recentDOMElement = document.querySelector(`#entry${id}`);
@@ -56,13 +37,13 @@ const RecentPayeeEntry = ({ nameInfo, isOpen, selected, id, chooseSelected, chan
     <div className="entry-input" id={`input${id}`}>
       <strong>How much do you want to send?: </strong>
       <input 
-        onChange={e => setAmount(e.target.value)} 
+        onChange={handleAmountChange} 
         name="amount" 
         className="message-name" 
         type="number" 
         placeholder="Amount To be Sent" 
         value={amount}></input>
-      <input onClick={submitAmount} type="submit" name="amount" value="Send"></input>
+      <input onClick={e => submitAmount(e, nameInfo.recipient_code)} type="submit" name="amount" value="Send"></input>
     </div>
   </div>
 )};

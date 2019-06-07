@@ -14,20 +14,9 @@ const App = () => {
   const email = 'magnanimus.shehu@gmail.com'; // In the future, a log in component will get the email for us
 
   const [ isDataReceived, setIsDataReceived ] = useState(false);
-  const [ selected, setSelected ] = useState(null);
-  const [ isOpen, setIsOpen ] = useState(true);
   const [ serverRequest, setServerRequest ] = useState({});
 
-  const chooseSelected = (e) => {
-    console.log(e.target.parentNode);
-    setSelected(`${e.target.parentNode.id}`)
-  }
-
-  const changeIsOpen = (e) => {
-    if (e.target.name !== 'amount') {
-      setIsOpen(!isOpen);
-    }
-  }
+  const [ amount, setAmount ] = useState();
 
   const retrieveServerRequest = async () => {
     let request = {};
@@ -59,6 +48,28 @@ const App = () => {
       })
   }
 
+  const initializeTransfer = (data) => {
+    Axios.post('/initialize-transfer', data)
+    .then(({ data }) => {
+      retrieveServerRequest();
+      alert('Your transfer was successful');
+      console.log(data);
+    })
+  }
+
+  const handleAmountChange = e => {
+    setAmount(e.target.value);
+  }
+
+  const submitAmount = (e, receipientCode) => {
+    e.preventDefault();
+    let receipient = {
+      amount: amount,
+      recipient: receipientCode
+    }
+    initializeTransfer(receipient); 
+  }
+
   useEffect(() => {
     retrieveServerRequest();
   }, []);
@@ -72,12 +83,10 @@ const App = () => {
           isDataReceived ? (
             <DetailsScreen    // Show the details screen after fetching data
               {...props} 
-              selected={selected} 
-              chooseSelected={chooseSelected} 
-              isOpen={isOpen} 
               email={email}
-              serverRequest={serverRequest}
-              changeIsOpen={changeIsOpen} />
+              handleAmountChange={handleAmountChange}
+              submitAmount={submitAmount}
+              serverRequest={serverRequest} />
           ) : (
             <LoadingScreen     // Render loading screen while fetching data
               loading={true}

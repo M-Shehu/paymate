@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import RecentPayeeEntry from './RecentPayeeEntry';
 import '../assets/styles/recentsList.css';
 
-const RecentList = ({ list, selected, chooseSelected, changeIsOpen, isOpen, setReceipientObj }) => {
+const RecentList = ({ list, submitAmount, handleAmountChange }) => {
   
+  const [ selected, setSelected ] = useState(null);
+  const [ isOpen, setIsOpen ] = useState(true);
+
+  const chooseSelected = (e) => {
+    console.log(e.target.parentNode);
+    setSelected(`${e.target.parentNode.id}`)
+  }
+
+  const changeIsOpen = (e) => {
+    if (e.target.name !== 'amount') {
+      setIsOpen(!isOpen);
+    }
+  }
+
   return (
     <div className="expand column horizontal-center">
       <div className="title">
@@ -16,10 +30,11 @@ const RecentList = ({ list, selected, chooseSelected, changeIsOpen, isOpen, setR
             return <RecentPayeeEntry 
               nameInfo={element} 
               id={id} 
+              handleAmountChange={handleAmountChange}
+              submitAmount={submitAmount}
               chooseSelected={chooseSelected}  
               changeIsOpen={changeIsOpen} 
               selected={selected}
-              setReceipientObj={setReceipientObj}
               isOpen={isOpen} />
           })
         }
