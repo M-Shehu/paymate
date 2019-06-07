@@ -9,7 +9,7 @@ const DetailsScreen = ({ handleAmountChange, serverRequest, email, submitAmount 
   return (
     <React.Fragment>
       <TopBar />
-      <div className="container row">
+      <div id="main" className="container row">
       <div className="col-50 column center balance-col">
 
         <Balance
