@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon -r dotenv/config server/index.js",
-    "build": "webpack --mode production",
+    "build:webpack": "webpack --mode production",
     "build:watch": "webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
