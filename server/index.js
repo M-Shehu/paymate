@@ -1,6 +1,8 @@
 require('dotenv').config();
 
-const paystack = require('paystack')(process.env.PAYSTACK_SECRET_KEY);
+// No paystack libraries were used due to the ambiguity of the different library versions
+// All server endpoints invoke the PayStack API directly
+// const paystack = require('paystack')(process.env.PAYSTACK_SECRET_KEY); 
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -123,6 +125,17 @@ app.post('/initialize-transaction', function(req, res) {
     });
 });
 
+app.get('/verify', function(req, res) {
+  let queryString = `bank/resolve?account_number=${req.query.account}&bank_code=${req.query.code}`;
+  Axios(authOptions('GET', queryString))
+    .then(({ data }) => {
+      res.send(data);
+    })
+    .catch(e => {
+      console.log(e.message);
+    });
+});
+
 app.post('/finalize-transaction', function(req, res) {
   let data = {
     email: "nuban", 
@@ -144,10 +157,8 @@ app.post('/finalize-transaction', function(req, res) {
     });
 });
 
-//The 404 Route (ALWAYS Keep this as the last route)
-app.get('/*', function(req, res){
-  res.status(404).send('Only GET /new-access-code \
-      or GET /verify/{reference} is allowed');
+app.get('/*', function(req, res) {
+  res.status(404).send('PayMate does not support that. Kindly go to the home page');
 });
 
 app.listen(app.get('port'), () => console.log(`Server listening on port ${app.get('port')}`));
