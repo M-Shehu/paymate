@@ -1,9 +1,16 @@
-body {
-  font-family: 'Raleway', sans-serif;
+* {
+  font-family: 'Lato', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+button,
+input {
+  outline: 0;
 }
 
 .container {
-  height: 97vh;
+  height: 90vh;
   width: 98vw;
 }
 
@@ -31,13 +38,13 @@ body {
 .row {
   display: flex;
   flex-flow: row;
-  border: 1px dotted black;
+  /* border: 1px dotted black; */
 }
 
 .column {
   display: flex;
   flex-flow: column;
-  border: 1px dotted black;
+  /* border: 1px dotted black; */
 }
 
 .center {
@@ -59,7 +66,7 @@ body {
 }
 
 .title {
-  font-size: 35px;
+  font-size: 25px;
   font-weight: bold;
   margin: 7px;
   text-align: center;

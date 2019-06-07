@@ -1,0 +1,37 @@
+.top-container {
+  display: flex;
+  background-color: rgb(48, 48, 48);
+  align-items: center;
+  letter-spacing: 1.5px;
+  justify-content: space-between;
+  box-shadow: 0 4px 8px 0 rgba(70, 70, 70, 0.5), 0 6px 20px 0 rgba(77, 77, 77, 0.4);
+}
+
+#title-container {
+  display: inline-block;
+  margin-left: 15px;
+}
+
+#title {
+  width: auto;
+  margin: 15px auto;
+  font-weight: 100;
+  text-align: center;
+  font-size: 32px;
+  display: inline-block;
+  color: white;
+}
+
+#title-logo {
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
+  display: inline-block;
+}
+
+#title-slogan {
+  color: white;
+  font-weight: 100;
+  margin-right: 30px;
+  font-style: italic;
+}
