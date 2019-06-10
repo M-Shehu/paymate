@@ -22,7 +22,7 @@
 #stats-container {
   background-color: rgb(48, 48, 48);
   margin: 50px auto;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   border-radius: 30px;
   width: 80%;
   height: auto;
@@ -123,5 +123,6 @@
 #repos:hover {
   background-color: orange;
   border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
   color: white;
 }
