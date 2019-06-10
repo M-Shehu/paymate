@@ -4,17 +4,18 @@ import RecentsList from '../components/RecentsList';
 import History from '../components/History';
 import '../assets/styles/DetailsScreen.css';
 import TopBar from '../components/TopBar';
+import AddSupplier from '../components/AddSupplier';
 
-const DetailsScreen = ({ handleAmountChange, serverRequest, email, submitAmount }) => {
+const DetailsScreen = ({serverRequest, email, updatePayees, updateHistory, updateBalance }) => {
   return (
     <React.Fragment>
       <TopBar />
       <div id="main" className="container row">
-      <div className="col-50 column center balance-col">
+      <div className="col-50 column horizontal-center balance-col">
 
         <Balance
-          banks={serverRequest.bankList}
           email={email}
+          updateHistory={updateHistory}
           balance={serverRequest.balance} />
 
         <History 
@@ -23,10 +24,13 @@ const DetailsScreen = ({ handleAmountChange, serverRequest, email, submitAmount 
       </div>
       <div className="col-50 column horizontal-center">
 
+        <AddSupplier 
+          updatePayees={updatePayees}
+          banks={serverRequest.bankList} />
+
         <RecentsList 
           list={serverRequest.payees} 
-          handleAmountChange={handleAmountChange}
-          submitAmount={submitAmount} />
+          updateBalance={updateBalance} />
 
       </div>
     </div>
