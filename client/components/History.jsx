@@ -8,15 +8,15 @@ const History = ({ history }) => {
   })
   
   const renderHistory = (history) => {
-    return history.map (element => {
-      return <HistoryEntry text={`₦${(element.amount/100).toLocaleString()} --- ${element.customer.email}`}/>; 
+    return history.map ((element, id) => {
+      return <HistoryEntry key={id} text={`₦${(element.amount/100).toLocaleString()} --- ${element.customer.email}`}/>; 
     })
   } 
   
   return (
     <div>
       <div className="title">
-        History
+        Cash Inflow History
       </div>
 
       {history && history.length > 0 ? renderHistory(history) : <HistoryEntry text={'You have no transaction history'} />}

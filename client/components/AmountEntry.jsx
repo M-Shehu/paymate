@@ -3,7 +3,7 @@ import '../assets/styles/amount-entry.css';
 
 const AmountEntry = ({ handleAmountChange, amount, topUpBalance }) => (
   <React.Fragment>
-    <div class="amount-search">
+    <div className="amount-search">
       <input onChange={e => handleAmountChange(e)} type="number" value={amount} placeholder="How much do you want to add (In Kobo Pls)..."/>       
     </div>
     

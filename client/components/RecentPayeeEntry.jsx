@@ -27,7 +27,7 @@ const RecentPayeeEntry = ({ nameInfo, isOpen, selected, id, handleAmountChange, 
   }, [isOpen])
 
   return (
-  <div class="recent" id={`entry${id}`} onClick={e => {chooseSelected(e); changeIsOpen(e);}}>
+  <div className="recent" id={`entry${id}`} onClick={e => {chooseSelected(e); changeIsOpen(e);}}>
     <div className="entry-name">
       NAME: {nameInfo.name}
     </div>
