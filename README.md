@@ -50,6 +50,7 @@ The web app has a couple of features that demostrates the features of the PaySta
 This web app is still in its infancy and is lacking a couple of features. Some features scheduled for future updates include:
 
 - User account management with stateless session management
+- Show tranfer history alongside cash inflow history
 - Ability to save your credit card and top up PayStack Balance automatically
 - Use of caching to cut down on page load time
 - Use of Redux state management store to properly manage the state within React
