@@ -35,6 +35,9 @@ app.get('/balance', (req, res) => {
   Axios(authOptions('GET', 'balance'))
     .then(({ data }) => {
       res.send(data);
+    })
+    .catch(e => {
+      res.status(404).send(e.message);
     });
 });
 
@@ -42,6 +45,9 @@ app.get('/history', (req, res) => {
   Axios(authOptions('GET', 'transaction'))
     .then(({ data }) => {
       res.send(data);
+    })
+    .catch(e => {
+      res.status(404).send(e.message);
     });
 });
 
@@ -49,6 +55,9 @@ app.get('/payees', (req, res) => {
   Axios(authOptions('GET', 'transferrecipient'))
     .then(({ data }) => {
       res.send(data);
+    })
+    .catch(e => {
+      res.status(404).send(e.message);
     });
 });
 
@@ -56,6 +65,9 @@ app.get('/bank-list', (req, res) => {
   Axios(authOptions('GET', 'bank'))
     .then(({ data }) => {
       res.send(data);
+    })
+    .catch(e => {
+      res.status(404).send(e.message);
     });
 });
 
@@ -74,7 +86,7 @@ app.post('/register-payee', function(req, res) {
       res.send(data);
     })
     .catch(e => {
-      console.log(e.message);
+      res.status(404).send(e.message);
     });
 });
 
@@ -91,7 +103,7 @@ app.post('/initialize-transfer', function(req, res) {
       res.send(data);
     })
     .catch(e => {
-      console.log(e.message);
+      res.status(404).send(e.message);
     });
 });
 
@@ -106,7 +118,7 @@ app.post('/finalize-transfer', function(req, res) {
       res.send(data);
     })
     .catch(e => {
-      console.log(e.message);
+      res.status(404).send(e.message);
     });
 });
 
@@ -121,7 +133,7 @@ app.post('/initialize-transaction', function(req, res) {
       res.send(data);
     })
     .catch(e => {
-      console.log(e.message);
+      res.status(404).send(e.message);
     });
 });
 
@@ -132,7 +144,7 @@ app.get('/verify', function(req, res) {
       res.send(data);
     })
     .catch(e => {
-      console.log(e.message);
+      res.status(404).send(e.message);
     });
 });
 
@@ -153,7 +165,7 @@ app.post('/finalize-transaction', function(req, res) {
       res.send(data);
     })
     .catch(e => {
-      console.log(e.message);
+      res.status(404).send(e.message);
     });
 });
 
