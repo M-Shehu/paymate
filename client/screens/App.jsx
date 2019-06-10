@@ -16,7 +16,28 @@ const App = () => {
   const [ isDataReceived, setIsDataReceived ] = useState(false);
   const [ serverRequest, setServerRequest ] = useState({});
 
-  const [ amount, setAmount ] = useState();
+ 
+
+  const updateBalance = async () => {
+    Axios.get('/balance')
+      .then(({ data }) => {
+        setServerRequest({...serverRequest, balance: data.data[0].balance})
+      })
+  }
+
+  const updateHistory = async () => {
+    Axios.get('/history')
+      .then(({ data }) => {
+        setServerRequest({...serverRequest, history: data.data})
+      })
+  }
+
+  const updatePayees = async () => {
+    Axios.get('/payees')
+      .then(({ data }) => {
+        setServerRequest({...serverRequest, payees: data.data})
+      })
+  }
 
   const retrieveServerRequest = async () => {
     let request = {};
@@ -42,27 +63,7 @@ const App = () => {
       .then(() => {
         setIsDataReceived(true);
       })
-  }
-
-  const initializeTransfer = (data) => {
-    Axios.post('/initialize-transfer', data)
-    .then(({ data }) => {
-      retrieveServerRequest();
-      alert('Your transfer was successful');
-    })
-  }
-
-  const handleAmountChange = e => {
-    setAmount(e.target.value);
-  }
-
-  const submitAmount = (e, receipientCode) => {
-    e.preventDefault();
-    let receipient = {
-      amount: amount,
-      recipient: receipientCode
-    }
-    initializeTransfer(receipient); 
+      .catch(e => alert('Please refresh the page. There was an error trying to retrieve info'));
   }
 
   useEffect(() => {
@@ -74,25 +75,25 @@ const App = () => {
       <Route                  // Default route is either the loading screen or the details screen
         exact
         path="/"
-        render={props =>
-          isDataReceived ? (
-            <DetailsScreen    // Show the details screen after fetching data
-              {...props} 
-              email={email}
-              handleAmountChange={handleAmountChange}
-              submitAmount={submitAmount}
-              serverRequest={serverRequest} />
-          ) : (
-            <LoadingScreen     // Render loading screen while fetching data
-              loading={true}
-              bgColor='#f1f1f1'
-              spinnerColor='#9ee5f8'
-              textColor='#676767'
-              logoSrc={logo}
-              text='PayMate' /> 
-          )
-        } 
-      />
+        render={props => (
+          <LoadingScreen     // Render loading screen while fetching data
+            loading={!isDataReceived}
+            bgColor='#f1f1f1'
+            spinnerColor='#9ee5f8'
+            textColor='#676767'
+            logoSrc={logo}
+            text='PayMate'>
+
+              {isDataReceived && <DetailsScreen    // Show the details screen after fetching data
+                {...props} 
+                email={email}
+                updateBalance={updateBalance}
+                updateHistory={updateHistory}
+                updatePayees={updatePayees}
+                serverRequest={serverRequest} />}
+
+          </LoadingScreen> )} />
+          
       <Route                  // This route was setup for a custom payment form. Is not currently in use
         path="/pay" 
         render={(props) => (
