@@ -44,7 +44,7 @@ The web app has a couple of features that demostrates the features of the PaySta
 - Top up PayStack&trade; Balance
 - Retrieve & display trasaction history
 - Add now suppliers / payees
-- Transfer money to suppliers / payees from PayStack&trade; Balance
+- Transfer money to suppliers / payees from PayStack&trade; Balance.
 
 ## 😶 What Will Be Added in The Future? ##
 This web app is still in its infancy and is lacking a couple of features. Some features scheduled for future updates include:
