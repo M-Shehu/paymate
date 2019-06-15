@@ -31,11 +31,11 @@
 
 
 ## 🤔 What is PayMate?  
-PayMate is a web app designed to handle payment to suppliers for small businesses. The web app is built with PayStack as the payment gateway and was built as a simple tool to demonstrate the flexibility and simplicity of the PayStack&trade; API. *It's also made to lowkey impress the guys down at PayStack&trade;. I hope I'm doing a good job at that.*
+PayMate is a web app designed to handle payment to suppliers for small businesses. The web app is built with PayStack as the payment gateway and was built as a simple tool to demonstrate the flexibility and simplicity of the PayStack&trade; API.
 
 
 ## 🌐 How Do I Use PayMate? ##
-Visit https://paymate.herokuapp.com for a demo of the system. It's easy to use. Try out all the features the web app has to offer. 
+Visit https://paymate-shehu.herokuapp.com for a demo of the system. It's easy to use. Try out all the features the web app has to offer. 
 
 ## 🏎️ What Can PayMate Do? ##
 The web app has a couple of features that demostrates the features of the PayStack API. These features are listed below:
